@@ -1,0 +1,97 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/prefs_main_template/macros/master">
+    <head>
+        
+    </head>
+    <body>
+        <div metal:fill-slot="prefs_configlet_main">
+			<script type="text/javascript">
+				$j = jQuery.noConflict();
+
+                $j(document).ready(function(){
+					$j('#confg-conteiner').load(function(){
+						var frame =  $j(this).contents();
+	                    
+						$j(this).attr('height', frame.height()+'px');
+						
+	                    frame.find('form').each(function(){
+	                        var rand = Math.floor(Math.random()*100),
+							    ajax_load = $j('<input>').attr({
+									id: 'ajax_load',
+								 	type: 'hidden',
+								 	name: 'ajax_load',
+								 	value: rand
+								}),
+								ajax_include_head = $j('<input>').attr({
+									id: 'ajax_include_head',
+                                    type: 'hidden',
+                                    name: 'ajax_include_head',
+                                    value: rand
+                                }),
+								wizard = $j('<input>').attr({
+                                    id: 'wizard',
+                                    type: 'hidden',
+                                    name: 'wizard',
+                                    value: true
+                                });    
+	                        
+	                        $j(this).append(ajax_load, ajax_include_head,wizard);
+	
+	                    });	
+					})
+				});
+				
+				
+			</script>
+			<h1>Vindula Wizard</h1>
+			
+			<br />
+			<fieldset>
+				<legend>Etapa</legend>
+				
+				<h2 content="view/titulo|nothing" >Titulo</h2>
+				<h3 tal:content="view/descricao|nothing">explicação</h3>
+				
+				<tal:cond condition="view/url|nothing">
+					<iframe id="confg-conteiner"
+					    name="confg-conteiner"
+					    frameborder="0"
+						marginheight="0"
+						marginwidth="0"
+						scrolling="no"
+					    width="100%" height="700px" tal:attributes="src view/url|nothing">
+					</iframe>
+				
+				    <form enctype="multipart/form-data" class="enableAutoFocus"
+				          tal:attributes="action string:${context/absolute_url|nothing}/vindula-wizard" method="POST">
+				
+						<!-- Botões de ação -->     
+						<fieldset>
+						    <br/>
+						    <div style="float:left; width:100%">
+							    <input type="hidden" name="anterior" tal:attributes="value view/anterior|nothing">
+								<input type="hidden" name="atual" tal:attributes="value view/atual|nothing">
+							
+						        <input style="float:left;" class="bt_comments" tal:condition="view/anterior|nothing"
+								       type="submit" value="Voltar" name="form.voltar">
+						        <input style="float:right;" class="bt_comments" type="submit" value="Avançar" name="form.proximo">
+						    </div>
+						</fieldset>
+				    </form>
+				
+				</tal:cond>
+				<tal:cond condition="not:view/url|nothing">
+				    <h1>Voce ja configurou todo os passo para o vindula</h1>
+					
+				    <input type="button" tal:attributes="onClick string: location.href='${context/portal_url}/'"
+				           class="bt_comments" value="Home Page" />
+				</tal:cond>
+				
+			</fieldset>
+		</div>
+	</body>
+</html>

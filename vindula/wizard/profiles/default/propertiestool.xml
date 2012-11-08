@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+	
+	<object name="vindula_wizard" meta_type="Plone Property Sheet">
+	   <property name="title" type="string">Vindula Wizard</property>
+	   
+	   <!-- base properties -->
+	   <!--property name="vindulaKey" type="string"></property-->
+	
+	</object>
+    
+	<object name="vindula_status_wizard" meta_type="Plone Property Sheet">
+       <property name="title" type="string">Vindula Status Wizard</property>
+	
+       <!-- base properties -->
+       <!--property name="vindulaKey" type="string"></property-->
+    
+    </object>
+
+</object>
